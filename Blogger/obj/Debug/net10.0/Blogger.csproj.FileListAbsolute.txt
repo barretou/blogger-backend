@@ -105,6 +105,7 @@ C:\Users\gusta\Documents\C#\Blogger\Blogger\obj\Debug\net10.0\Blogger.AssemblyIn
 C:\Users\gusta\Documents\C#\Blogger\Blogger\obj\Debug\net10.0\Blogger.csproj.CoreCompileInputs.cache
 C:\Users\gusta\Documents\C#\Blogger\Blogger\obj\Debug\net10.0\Blogger.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\gusta\Documents\C#\Blogger\Blogger\obj\Debug\net10.0\Blogger.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\gusta\Documents\C#\Blogger\Blogger\obj\Debug\net10.0\Blogger.sourcelink.json
 C:\Users\gusta\Documents\C#\Blogger\Blogger\obj\Debug\net10.0\rjimswa.dswa.cache.json
 C:\Users\gusta\Documents\C#\Blogger\Blogger\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 C:\Users\gusta\Documents\C#\Blogger\Blogger\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json

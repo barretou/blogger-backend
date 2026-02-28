@@ -41,9 +41,18 @@ namespace Blogger.Repository.Context
 
                 entity.HasKey(p => p.Id);
 
-                entity.Property(p => p.Title).IsRequired().HasMaxLength(200);
-                entity.Property(p => p.Content).IsRequired();
-                entity.Property(p => p.CreatedAt).IsRequired();
+                entity.Property(p => p.Id)
+                      .UseIdentityColumn();
+
+                entity.Property(p => p.Title)
+                      .IsRequired()
+                      .HasMaxLength(200);
+
+                entity.Property(p => p.Content)
+                      .IsRequired();
+
+                entity.Property(p => p.CreatedAt)
+                      .IsRequired();
             });
         }
     }

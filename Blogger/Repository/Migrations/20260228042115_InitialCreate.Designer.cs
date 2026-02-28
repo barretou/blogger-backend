@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Blogger.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260227230617_InitialCreate")]
+    [Migration("20260228042115_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
