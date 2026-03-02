@@ -1,4 +1,5 @@
-﻿using Blogger.Domain.Models;
+﻿using Blogger.Domain.Enums;
+using Blogger.Domain.Models;
 using Blogger.Domain.Requests.Posts;
 using Blogger.Repository.Interfaces;
 using Blogger.Services.DTO;
@@ -10,11 +11,13 @@ namespace Blogger.Services
     {
         private readonly IPostRepository _postRepository;
         private readonly IAuthorRepository _authorRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public PostService(IPostRepository postRepository, IAuthorRepository authorRepository)
+        public PostService(IPostRepository postRepository, IAuthorRepository authorRepository, ICategoryRepository categoryRepository)
         {
             _postRepository = postRepository;
             _authorRepository = authorRepository;
+            _categoryRepository = categoryRepository;
         }
 
         public async Task<List<PostDto>> GetAllAsync()
@@ -26,6 +29,7 @@ namespace Blogger.Services
 
             return posts.Select(post => new PostDto
             {
+                Id = post.Id,
                 Title = post.Title,
                 Content = post.Content,
                 CreatedAt = post.CreatedAt,
@@ -46,6 +50,7 @@ namespace Blogger.Services
 
             return new PostDto
             {
+                Id = post.Id,
                 Title = post.Title,
                 Content = post.Content,
                 CreatedAt = post.CreatedAt,
@@ -62,16 +67,34 @@ namespace Blogger.Services
             ArgumentNullException.ThrowIfNull(request);
 
             Author author = await _authorRepository.GetAuthorByIdAsync(request.AuthorId);
-            if (author == null)
+            if (author is null)
                 throw new KeyNotFoundException($"Autor {request.AuthorId} não encontrado.");
 
+            if (!Enum.IsDefined(typeof(CategoryType), request.Type))
+                throw new ArgumentException("Invalid category type.");
 
-            Post createdPost = await _postRepository.CreateAsync(request);
+            Category category = await _categoryRepository.GetByTypeAsync(request.Type);
+            if (category is null)
+                throw new InvalidOperationException("Category not found.");
+
+            Post post = new()
+            {
+                Title = request.Title,
+                Content = request.Content,
+                AuthorId = request.AuthorId,
+                CreatedAt = DateTime.UtcNow,
+                CategoryId = category.Id
+            };
+
+            var createdPost = await _postRepository.CreateAsync(post);
+
             return new PostDto
             {
+                Id = createdPost.Id,
                 Title = createdPost.Title,
                 Content = createdPost.Content,
                 CreatedAt = createdPost.CreatedAt,
+                Type = request.Type,
                 Author = new AuthorDto
                 {
                     Name = author.Name,
@@ -84,34 +107,43 @@ namespace Blogger.Services
         {
             ArgumentNullException.ThrowIfNull(request);
 
-            Post updatedPost = await _postRepository.UpdateAsync(request);
+            Post post = await _postRepository.GetByIdAsync(request.Id);
+            if (post is null)
+                throw new KeyNotFoundException($"Post {request.Id} not found.");
 
-            if (updatedPost == null)
-                throw new KeyNotFoundException($"Post {request.Id} não encontrado.");
+            Author author = await _authorRepository.GetAuthorByIdAsync(request.AuthorId);
+            if (author is null)
+                throw new KeyNotFoundException($"Author {request.AuthorId} not found.");
 
-            var author = await _authorRepository.GetAuthorByIdAsync(updatedPost.AuthorId);
+            post.Title = request.Title;
+            post.Content = request.Content;
+            post.AuthorId = request.AuthorId;
+            post.UpdatedAt = DateTime.UtcNow;
+
+            Post updatedPost = await _postRepository.UpdateAsync(post);
 
             return new PostDto
             {
+                Id = updatedPost.Id,
                 Title = updatedPost.Title,
                 Content = updatedPost.Content,
                 CreatedAt = updatedPost.CreatedAt,
-                Author = author != null ? new AuthorDto
+                UpdatedAt = updatedPost.UpdatedAt,
+                Author = new AuthorDto
                 {
                     Name = author.Name,
                     Email = author.Email
-                } : null
+                }
             };
         }
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var deleted = await _postRepository.DeleteAsync(id);
+            var post = await _postRepository.GetByIdAsync(id);
+            if (post is null)
+                throw new KeyNotFoundException($"Post {id} not found.");
 
-            if (!deleted)
-                throw new KeyNotFoundException($"Post com ID {id} não encontrado.");
-
-            return true;
+            return await _postRepository.DeleteAsync(post);
         }
     }
 }

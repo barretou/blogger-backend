@@ -22,6 +22,7 @@ namespace Blogger.Services
 
             return new AuthorDto
             {
+                Id = createdAuthor.Id,
                 Name = createdAuthor.Name,
                 Email = createdAuthor.Email
             };
@@ -35,6 +36,7 @@ namespace Blogger.Services
 
             return new AuthorDto
             {
+                Id = author.Id,
                 Name = author.Name,
                 Email = author.Email
             };

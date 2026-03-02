@@ -12,6 +12,7 @@ namespace Blogger.Repository.Context
 
         public DbSet<Author> Authors { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Category> Categories { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,6 +34,22 @@ namespace Blogger.Repository.Context
                       .WithOne(p => p.Author)
                       .HasForeignKey(p => p.AuthorId)
                       .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<Category>(entity =>
+            {
+                entity.ToTable("Categories");
+
+                entity.HasKey(c => c.Id);
+
+                entity.Property(c => c.Name)
+                      .IsRequired()
+                      .HasMaxLength(100);
+
+                entity.HasMany(c => c.Posts)
+                      .WithOne(p => p.Category)
+                      .HasForeignKey(p => p.CategoryId)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
 
             modelBuilder.Entity<Post>(entity =>

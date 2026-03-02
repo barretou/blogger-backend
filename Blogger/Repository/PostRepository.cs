@@ -1,4 +1,5 @@
-﻿using Blogger.Domain.Models;
+﻿using Blogger.Domain.Enums;
+using Blogger.Domain.Models;
 using Blogger.Domain.Requests.Posts;
 using Blogger.Repository.Context;
 using Blogger.Repository.Interfaces;
@@ -31,45 +32,31 @@ namespace Blogger.Repository
                                  .FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public async Task<Post> CreateAsync(CreatePostRequest request)
-        {
-            ArgumentNullException.ThrowIfNull(request);
-            Post newPost = new()
-            {
-                Title = request.Title,
-                Content = request.Content,
-                AuthorId = request.AuthorId,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            await _context.Posts.AddAsync(newPost);
-            await _context.SaveChangesAsync();
-            return newPost;
-
-        }
-
-        public async Task<Post> UpdateAsync(UpdatePostRequest request)
+        public async Task<Post> CreateAsync(Post request)
         {
             ArgumentNullException.ThrowIfNull(request);
 
-            Post existingPost = await _context.Posts.FindAsync(request.Id);
-            if (existingPost == null) return null;
-
-            existingPost.Title = request.Title;
-            existingPost.Content = request.Content;
-            existingPost.AuthorId = request.AuthorId;
-            existingPost.UpdatedAt = DateTime.UtcNow;
-
+            await _context.Posts.AddAsync(request);
             await _context.SaveChangesAsync();
-            return existingPost;
+
+            return request;
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<Post> UpdateAsync(Post request)
         {
-            Post post = await _context.Posts.FindAsync(id);
-            if (post == null) return false;
+            ArgumentNullException.ThrowIfNull(request);
 
-            _context.Posts.Remove(post);
+            _context.Posts.Update(request);
+            await _context.SaveChangesAsync();
+
+            return request;
+        }
+
+        public async Task<bool> DeleteAsync(Post request)
+        {
+            ArgumentNullException.ThrowIfNull(request);
+
+            _context.Posts.Remove(request);
             await _context.SaveChangesAsync();
             return true;
         }

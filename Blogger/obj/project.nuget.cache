@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "wN4xrOyoic8=",
+  "dgSpecHash": "rV+lJOblYWk=",
   "success": true,
-  "projectFilePath": "C:\\Users\\gusta\\Documents\\C#\\Blogger\\Blogger\\Blogger.csproj",
+  "projectFilePath": "C:\\Users\\gusta\\Documents\\C#\\blogger-backend\\Blogger\\Blogger.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gusta\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\gusta\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.3\\microsoft.aspnetcore.openapi.10.0.3.nupkg.sha512",

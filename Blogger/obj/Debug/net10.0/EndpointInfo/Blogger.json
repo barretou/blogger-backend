@@ -328,6 +328,14 @@
       "AuthorDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
           "name": {
             "type": "string"
           },
@@ -335,6 +343,9 @@
             "type": "string"
           }
         }
+      },
+      "CategoryType": {
+        "type": "integer"
       },
       "CreateAuthorRequest": {
         "type": "object",
@@ -366,12 +377,23 @@
               "string"
             ],
             "format": "int32"
+          },
+          "type": {
+            "$ref": "#/components/schemas/CategoryType"
           }
         }
       },
       "PostDto": {
         "type": "object",
         "properties": {
+          "id": {
+            "pattern": "^-?(?:0|[1-9]\\d*)$",
+            "type": [
+              "integer",
+              "string"
+            ],
+            "format": "int32"
+          },
           "title": {
             "type": "string"
           },
@@ -381,6 +403,16 @@
           "createdAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "updatedAt": {
+            "type": [
+              "null",
+              "string"
+            ],
+            "format": "date-time"
+          },
+          "type": {
+            "$ref": "#/components/schemas/CategoryType"
           },
           "author": {
             "$ref": "#/components/schemas/AuthorDto"

@@ -1,7 +1,8 @@
 ﻿using Blogger.Domain.Models;
+using Blogger.Domain.Requests.Author;
 using Blogger.Repository.Context;
 using Blogger.Repository.Interfaces;
-using Blogger.Domain.Requests.Author;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blogger.Repository
 {
@@ -16,7 +17,9 @@ namespace Blogger.Repository
 
         public async Task<Author?> GetAuthorByIdAsync(int id)
         {
-            return await _context.Authors.FindAsync(id);
+            return await _context.Authors
+                .AsNoTracking()
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<Author> CreateAuthorAsync(CreateAuthorRequest request)
