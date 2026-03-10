@@ -1,5 +1,21 @@
 [
   {
+    "ContainingType": "Blogger.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Blogger.Domain.Requests.Auth.AuthRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Blogger.Controllers.AuthorController",
     "Method": "Create",
     "RelativePath": "api/Author",

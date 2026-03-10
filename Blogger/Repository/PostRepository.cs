@@ -19,7 +19,8 @@ namespace Blogger.Repository
         public async Task<List<Post>> GetAllAsync()
         {
             return await _context.Posts
-                                 .Include(p => p.Author)
+                                 .Include(a => a.Author)
+                                 .Include(c => c.Category)
                                  .AsNoTracking()
                                  .ToListAsync();
         }
@@ -27,7 +28,8 @@ namespace Blogger.Repository
         public async Task<Post?> GetByIdAsync(int id)
         {
             return await _context.Posts
-                                 .Include(p => p.Author)
+                                 .Include(a => a.Author)
+                                 .Include(c => c.Category)
                                  .AsNoTracking()
                                  .FirstOrDefaultAsync(p => p.Id == id);
         }

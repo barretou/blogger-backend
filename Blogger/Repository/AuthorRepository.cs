@@ -22,6 +22,12 @@ namespace Blogger.Repository
                 .FirstOrDefaultAsync(a => a.Id == id);
         }
 
+        public async Task<Author?> GetByEmailAsync(string email)
+        {
+            return await _context.Authors
+                .FirstOrDefaultAsync(a => a.Email == email);
+        }
+
         public async Task<Author> CreateAuthorAsync(CreateAuthorRequest request)
         {
             ArgumentNullException.ThrowIfNull(request);

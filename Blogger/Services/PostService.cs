@@ -33,11 +33,16 @@ namespace Blogger.Services
                 Title = post.Title,
                 Content = post.Content,
                 CreatedAt = post.CreatedAt,
-                Author = post.Author != null ? new AuthorDto
+                Category = new CategoryDto
+                {
+                    Name = post.Category.Name,
+                    Type = post.Category.Type
+                },
+                Author = new AuthorDto
                 {
                     Name = post.Author.Name,
                     Email = post.Author.Email
-                } : null
+                }
             }).ToList();
         }
 
@@ -54,11 +59,16 @@ namespace Blogger.Services
                 Title = post.Title,
                 Content = post.Content,
                 CreatedAt = post.CreatedAt,
-                Author = post.Author != null ? new AuthorDto
+                Category = new CategoryDto
+                {
+                    Name = post.Category.Name,
+                    Type = post.Category.Type
+                },
+                Author = new AuthorDto
                 {
                     Name = post.Author.Name,
                     Email = post.Author.Email
-                } : null
+                }
             };
         }
 
@@ -94,7 +104,11 @@ namespace Blogger.Services
                 Title = createdPost.Title,
                 Content = createdPost.Content,
                 CreatedAt = createdPost.CreatedAt,
-                Type = request.Type,
+                Category = new CategoryDto
+                {
+                    Name = createdPost.Category.Name,
+                    Type = createdPost.Category.Type
+                },
                 Author = new AuthorDto
                 {
                     Name = author.Name,

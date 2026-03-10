@@ -6,6 +6,7 @@ namespace Blogger.Repository.Interfaces
     public interface IAuthorRepository
     {
         Task<Author?> GetAuthorByIdAsync(int id);
+        Task<Author?> GetByEmailAsync(string email);
         Task<Author> CreateAuthorAsync(CreateAuthorRequest request);
     }
 }

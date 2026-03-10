@@ -2,6 +2,7 @@
 using Blogger.Domain.Requests.Posts;
 using Microsoft.AspNetCore.Mvc;
 using Blogger.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blogger.Controllers
 {
@@ -38,6 +39,7 @@ namespace Blogger.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<PostDto>> Create([FromBody] CreatePostRequest request)
         {
@@ -52,6 +54,7 @@ namespace Blogger.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<PostDto>> Update(int id, [FromBody] UpdatePostRequest request)
         {
@@ -69,6 +72,7 @@ namespace Blogger.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {

@@ -13,6 +13,38 @@
     }
   ],
   "paths": {
+    "/api/Auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Author/{id}": {
       "get": {
         "tags": [
@@ -344,6 +376,28 @@
           }
         }
       },
+      "AuthRequest": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "CategoryDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/CategoryType"
+          }
+        }
+      },
       "CategoryType": {
         "type": "integer"
       },
@@ -411,8 +465,8 @@
             ],
             "format": "date-time"
           },
-          "type": {
-            "$ref": "#/components/schemas/CategoryType"
+          "category": {
+            "$ref": "#/components/schemas/CategoryDto"
           },
           "author": {
             "$ref": "#/components/schemas/AuthorDto"
@@ -449,6 +503,9 @@
     }
   },
   "tags": [
+    {
+      "name": "Auth"
+    },
     {
       "name": "Author"
     },

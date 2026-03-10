@@ -246,3 +246,11 @@ C:\Users\gusta\Documents\C#\blogger-backend\Blogger\obj\Debug\net10.0\Blogger.pd
 C:\Users\gusta\Documents\C#\blogger-backend\Blogger\obj\Debug\net10.0\Blogger.genruntimeconfig.cache
 C:\Users\gusta\Documents\C#\blogger-backend\Blogger\obj\Debug\net10.0\ref\Blogger.dll
 C:\Users\gusta\Documents\C#\blogger-backend\Blogger\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt
+C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
