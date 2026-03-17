@@ -58,12 +58,9 @@ namespace Blogger.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<PostDto>> Update(int id, [FromBody] UpdatePostRequest request)
         {
-            if (id != request.Id)
-                return BadRequest(new { message = "Id da rota diferente do corpo da requisição." });
-
             try
             {
-                var updatedPost = await _postService.UpdateAsync(request);
+                var updatedPost = await _postService.UpdateAsync(id, request);
                 return Ok(updatedPost);
             }
             catch (KeyNotFoundException ex)

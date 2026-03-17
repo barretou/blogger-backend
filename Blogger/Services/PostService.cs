@@ -40,6 +40,7 @@ namespace Blogger.Services
                 },
                 Author = new AuthorDto
                 {
+                    Id = post.Author.Id,
                     Name = post.Author.Name,
                     Email = post.Author.Email
                 }
@@ -117,21 +118,24 @@ namespace Blogger.Services
             };
         }
 
-        public async Task<PostDto> UpdateAsync(UpdatePostRequest request)
+        public async Task<PostDto> UpdateAsync(int id, UpdatePostRequest request)
         {
             ArgumentNullException.ThrowIfNull(request);
+            ArgumentNullException.ThrowIfNull(request.Category);
 
-            Post post = await _postRepository.GetByIdAsync(request.Id);
+            Post post = await _postRepository.GetByIdAsync(id);
             if (post is null)
-                throw new KeyNotFoundException($"Post {request.Id} not found.");
+                throw new KeyNotFoundException($"Post {id} not found.");
 
-            Author author = await _authorRepository.GetAuthorByIdAsync(request.AuthorId);
-            if (author is null)
-                throw new KeyNotFoundException($"Author {request.AuthorId} not found.");
+            Category category = await _categoryRepository.GetByTypeAsync(request.Category.Type);
+            if (category is null)
+                throw new InvalidOperationException("Category not found.");
+
 
             post.Title = request.Title;
             post.Content = request.Content;
             post.AuthorId = request.AuthorId;
+            post.Category = category;
             post.UpdatedAt = DateTime.UtcNow;
 
             Post updatedPost = await _postRepository.UpdateAsync(post);
@@ -143,10 +147,15 @@ namespace Blogger.Services
                 Content = updatedPost.Content,
                 CreatedAt = updatedPost.CreatedAt,
                 UpdatedAt = updatedPost.UpdatedAt,
+                Category = new CategoryDto
+                {
+                    Name = updatedPost.Category.Name,
+                    Type = updatedPost.Category.Type
+                },
                 Author = new AuthorDto
                 {
-                    Name = author.Name,
-                    Email = author.Email
+                    Name = updatedPost.Author.Name,
+                    Email = updatedPost.Author.Email
                 }
             };
         }

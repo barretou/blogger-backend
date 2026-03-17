@@ -8,7 +8,7 @@ namespace Blogger.Services.Interfaces
             Task<List<PostDto>> GetAllAsync();
             Task<PostDto?> GetByIdAsync(int id);
             Task<PostDto> CreateAsync(CreatePostRequest request);
-            Task<PostDto> UpdateAsync(UpdatePostRequest request);
+            Task<PostDto> UpdateAsync(int id, UpdatePostRequest request);
             Task<bool> DeleteAsync(int id);
     }
 }

@@ -490,6 +490,9 @@
           "content": {
             "type": "string"
           },
+          "category": {
+            "$ref": "#/components/schemas/CategoryDto"
+          },
           "authorId": {
             "pattern": "^-?(?:0|[1-9]\\d*)$",
             "type": [
