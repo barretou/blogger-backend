@@ -31,6 +31,13 @@ namespace Blogger.Controllers
             }
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<PostDto>>> GetAll()
+        {
+            var posts = await _authorService.GetAllAsync();
+            return Ok(posts);
+        }
+
         [HttpPost]
         public async Task<ActionResult<PostDto>> Create([FromBody] CreateAuthorRequest request)
         {
@@ -44,5 +51,22 @@ namespace Blogger.Controllers
                 return NotFound(new { message = ex.Message });
             }
         }
-    }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            try
+            {
+                bool isDeleted = await _authorService.DeleteAsync(id);
+                if (isDeleted)
+                    return NoContent();
+                else
+                    return StatusCode(500, new { message = "Erro ao deletar o autor." });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+     }
 }

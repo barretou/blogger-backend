@@ -41,5 +41,20 @@ namespace Blogger.Repository
             await _context.SaveChangesAsync();
             return newAuthor;
         }
+
+        public async Task<List<Author>> GetAllAuthorsAsync()
+        {
+            return await _context.Authors
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+       public async Task<bool> DeleteAuthorAsync(Author author)
+        {
+            _context.Authors.Remove(author);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
