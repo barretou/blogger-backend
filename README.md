@@ -1,6 +1,6 @@
 # 📘 API Project
 
-A RESTful API built with **.NET**, focused on managing posts, authors, and authentication using JWT.
+A RESTful API built with **.NET 10**, focused on managing posts, authors, and authentication using JWT.
 
 ---
 
