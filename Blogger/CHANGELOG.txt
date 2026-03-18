@@ -1,0 +1,34 @@
+﻿# Changelog
+
+All notable changes to this project will be documented in this file.
+
+---
+
+## [1.3.0] - 2026-03-18
+### Added
+- Login Jwt authentication
+
+### Changed
+- Improved security for user authentication
+- Updated database schema for user authentication
+
+### Fixed
+- Service layer for posts and authors to handle authentication
+
+---
+
+## [1.2.0] - 2026-03-10
+### Added
+- Initial Authors modeling database schema
+
+### Fixed
+- Relationship between Posts and Authors in database schema
+- Issue with foreign key constraints in Posts table
+
+---
+
+## [1.1.0] - 2026-03-01
+### Added
+- Initial Posts modeling database schema
+- Initial Catgories modeling database schema
+- Initial migrations
