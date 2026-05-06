@@ -1,5 +1,6 @@
 ﻿using Blogger.Domain.Models;
 using Blogger.Repository.Interfaces;
+using Blogger.Services.DTO;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -18,7 +19,7 @@ namespace Blogger.Services
             _config = config;
         }
 
-        public async Task<string?> Authenticate(string email, string password)
+        public async Task<AuthDto?> Authenticate(string email, string password)
         {
             var author = await _authorRepository.GetByEmailAsync(email);
 
@@ -28,7 +29,13 @@ namespace Blogger.Services
             if (author.Password != password)
                 return null;
 
-            return GenerateToken(author);
+            string token = GenerateToken(author);
+
+            return new AuthDto
+            {
+                Token = token,
+                UserId = author.Id
+            };
         }
 
         private string GenerateToken(Author author)

@@ -123,9 +123,10 @@ namespace Blogger.Services
             ArgumentNullException.ThrowIfNull(request);
             ArgumentNullException.ThrowIfNull(request.Category);
 
-            Post post = await _postRepository.GetByIdAsync(id);
-            if (post is null)
-                throw new KeyNotFoundException($"Post {id} not found.");
+            Post post = await _postRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"Post {id} not found.");
+
+            if (post.AuthorId != request.AuthorId)
+                throw new InvalidOperationException($"Only the same author can edit the post {post.Title}.");
 
             Category category = await _categoryRepository.GetByTypeAsync(request.Category.Type);
             if (category is null)

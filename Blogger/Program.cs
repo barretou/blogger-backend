@@ -1,4 +1,5 @@
 
+using Blogger.Infra;
 using Blogger.Repository;
 using Blogger.Repository.Context;
 using Blogger.Repository.Interfaces;
@@ -79,6 +80,7 @@ namespace Blogger
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
+            app.UseMiddleware<ExceptionMiddleware>();
             app.MapControllers();
 
             app.Run();

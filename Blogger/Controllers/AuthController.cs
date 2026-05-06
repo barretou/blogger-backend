@@ -18,12 +18,12 @@ namespace Blogger.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(AuthRequest request)
         {
-            var token = await _authService.Authenticate(request.Email, request.Password);
+            var result = await _authService.Authenticate(request.Email, request.Password);
 
-            if (token == null)
-                return Unauthorized("Credenciais inválidas");
+            if (result == null)
+                return Unauthorized();
 
-            return Ok(new { token });
+            return Ok(result);
         }
     }
 }
