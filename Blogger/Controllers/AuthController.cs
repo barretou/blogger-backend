@@ -1,6 +1,5 @@
 ﻿using Blogger.Domain.Requests.Auth;
 using Blogger.Services;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blogger.Controllers

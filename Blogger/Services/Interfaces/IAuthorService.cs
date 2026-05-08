@@ -5,9 +5,9 @@ namespace Blogger.Services.Interfaces
 {
     public interface IAuthorService
     {
-        Task<AuthorDto?> GetByIdAsync(int id);
+        Task<AuthorDto?> GetByIdAsync(Guid id);
         Task<List<AuthorDto>> GetAllAsync();
-        Task<bool> DeleteAsync(int id);
+        Task<bool> DeleteAsync(Guid id);
         Task<AuthorDto> CreateAsync(CreateAuthorRequest request);
     }
 }

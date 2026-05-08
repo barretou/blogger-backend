@@ -58,9 +58,6 @@ namespace Blogger.Repository.Context
 
                 entity.HasKey(p => p.Id);
 
-                entity.Property(p => p.Id)
-                      .UseIdentityColumn();
-
                 entity.Property(p => p.Title)
                       .IsRequired()
                       .HasMaxLength(200);

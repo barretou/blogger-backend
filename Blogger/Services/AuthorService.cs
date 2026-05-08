@@ -28,12 +28,11 @@ namespace Blogger.Services
             };
         }
 
-        public async Task<AuthorDto?> GetByIdAsync(int id)
+        public async Task<AuthorDto?> GetByIdAsync(Guid id)
         {
             Author author = await _authorRepository.GetAuthorByIdAsync(id);
             if (author == null)
-                throw new KeyNotFoundException($"Autor {author.Id} não encontrado.");
-
+                throw new KeyNotFoundException($"Autor não encontrado.");
             return new AuthorDto
             {
                 Id = author.Id,
@@ -42,11 +41,11 @@ namespace Blogger.Services
             };
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             Author author = _authorRepository.GetAuthorByIdAsync(id).Result;
             if (author == null)
-                throw new KeyNotFoundException($"Autor {author.Id} não encontrado.");
+                throw new KeyNotFoundException($"Autor não encontrado.");
 
             bool isDeleted = await  _authorRepository.DeleteAuthorAsync(author);
             return isDeleted;

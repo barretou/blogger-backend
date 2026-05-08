@@ -5,7 +5,7 @@ namespace Blogger.Repository.Interfaces
 {
     public interface IAuthorRepository
     {
-        Task<Author?> GetAuthorByIdAsync(int id);
+        Task<Author?> GetAuthorByIdAsync(Guid id);
         Task<List<Author>> GetAllAuthorsAsync();
         Task<Author?> GetByEmailAsync(string email);
         Task<bool> DeleteAuthorAsync(Author author);

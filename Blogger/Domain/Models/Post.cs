@@ -2,11 +2,11 @@
 {
     public class Post
     {
-        public int Id { get; set; }
+        public Guid Id { get; private set; } = Guid.NewGuid();
         public string Title { get; set; }
         public string Content { get; set; }
 
-        public int AuthorId { get; set; }
+        public Guid AuthorId { get; set; }
         public Author Author { get; set; }
 
         public int CategoryId { get; set; }

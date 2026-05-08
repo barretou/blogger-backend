@@ -5,7 +5,7 @@ namespace Blogger.Repository.Interfaces
 {
     public interface IPostRepository
     {
-        Task<Post> GetByIdAsync(int id);
+        Task<Post> GetByIdAsync(Guid id);
         Task<List<Post>> GetAllAsync();
         Task<Post> CreateAsync(Post request);
         Task<Post> UpdateAsync(Post request);

@@ -18,7 +18,7 @@ namespace Blogger.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PostDto>> Get(int id)
+        public async Task<ActionResult<PostDto>> Get(Guid id)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace Blogger.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(Guid id)
         {
             try
             {

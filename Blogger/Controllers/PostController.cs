@@ -26,7 +26,7 @@ namespace Blogger.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PostDto>> GetById(int id)
+        public async Task<ActionResult<PostDto>> GetById(Guid id)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace Blogger.Controllers
 
         [Authorize]
         [HttpPut("{id}")]
-        public async Task<ActionResult<PostDto>> Update(int id, [FromBody] UpdatePostRequest request)
+        public async Task<ActionResult<PostDto>> Update(Guid id, [FromBody] UpdatePostRequest request)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace Blogger.Controllers
 
         [Authorize]
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(Guid id)
         {
             try
             {

@@ -47,7 +47,7 @@ namespace Blogger.Services
             }).ToList();
         }
 
-        public async Task<PostDto> GetByIdAsync(int id)
+        public async Task<PostDto> GetByIdAsync(Guid id)
         {
             var post = await _postRepository.GetByIdAsync(id);
 
@@ -112,13 +112,14 @@ namespace Blogger.Services
                 },
                 Author = new AuthorDto
                 {
+                    Id = author.Id,
                     Name = author.Name,
                     Email = author.Email
                 }
             };
         }
 
-        public async Task<PostDto> UpdateAsync(int id, UpdatePostRequest request)
+        public async Task<PostDto> UpdateAsync(Guid id, UpdatePostRequest request)
         {
             ArgumentNullException.ThrowIfNull(request);
             ArgumentNullException.ThrowIfNull(request.Category);
@@ -161,7 +162,7 @@ namespace Blogger.Services
             };
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task<bool> DeleteAsync(Guid id)
         {
             var post = await _postRepository.GetByIdAsync(id);
             if (post is null)

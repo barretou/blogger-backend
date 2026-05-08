@@ -3,6 +3,6 @@
     public class AuthDto
     {
         public string Token { get; set; } = string.Empty;
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

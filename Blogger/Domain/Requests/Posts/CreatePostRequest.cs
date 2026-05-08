@@ -7,7 +7,7 @@ namespace Blogger.Domain.Requests.Posts
     {
         public string Title { get; set; }
         public string Content { get; set; }
-        public int AuthorId { get; set; }
+        public Guid AuthorId { get; set; }
         public CategoryType Type { get; set; }
     }
 }

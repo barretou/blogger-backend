@@ -15,7 +15,7 @@ namespace Blogger.Repository
             _context = context;
         }
 
-        public async Task<Author?> GetAuthorByIdAsync(int id)
+        public async Task<Author?> GetAuthorByIdAsync(Guid id)
         {
             return await _context.Authors
                 .AsNoTracking()
