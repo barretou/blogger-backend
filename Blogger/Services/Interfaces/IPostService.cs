@@ -5,10 +5,10 @@ namespace Blogger.Services.Interfaces
 {
     public interface IPostService
     {
-            Task<List<PostDto>> GetAllAsync();
-            Task<PostDto?> GetByIdAsync(Guid id);
-            Task<PostDto> CreateAsync(CreatePostRequest request);
-            Task<PostDto> UpdateAsync(Guid id, UpdatePostRequest request);
-            Task<bool> DeleteAsync(Guid id);
+            Task<List<PostDto>> GetAllPostsAsync();
+            Task<PostDto?> GetPostByIdAsync(Guid postId);
+            Task<PostDto> CreatePostAsync(CreatePostRequest request);
+            Task<PostDto> UpdatePostAsync(Guid postId, UpdatePostRequest request);
+            Task<bool> DeletePostAsync(Guid postId);
     }
 }

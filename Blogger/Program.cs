@@ -1,4 +1,5 @@
 
+using Blogger.Domain.Mapper;
 using Blogger.Infra;
 using Blogger.Repository;
 using Blogger.Repository.Context;
@@ -31,6 +32,7 @@ namespace Blogger
             builder.Services.AddScoped<IAuthorService, AuthorService>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<AuthService>();
+            builder.Services.AddAutoMapper(typeof(PostProfile));
 
             var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 

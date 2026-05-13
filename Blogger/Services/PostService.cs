@@ -3,6 +3,7 @@ using Blogger.Domain.Models;
 using Blogger.Domain.Requests.Posts;
 using Blogger.Repository.Interfaces;
 using Blogger.Services.DTO;
+using AutoMapper;
 using Blogger.Services.Interfaces;
 
 namespace Blogger.Services
@@ -12,119 +13,72 @@ namespace Blogger.Services
         private readonly IPostRepository _postRepository;
         private readonly IAuthorRepository _authorRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IMapper _mapper;
 
-        public PostService(IPostRepository postRepository, IAuthorRepository authorRepository, ICategoryRepository categoryRepository)
+        public PostService(IPostRepository postRepository, IAuthorRepository authorRepository, ICategoryRepository categoryRepository, IMapper mapper)
         {
             _postRepository = postRepository;
             _authorRepository = authorRepository;
             _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
-        public async Task<List<PostDto>> GetAllAsync()
+        public async Task<List<PostDto>> GetAllPostsAsync()
         {
             var posts = await _postRepository.GetAllAsync();
 
             if (posts == null || !posts.Any())
                 return new List<PostDto>();
 
-            return posts.Select(post => new PostDto
-            {
-                Id = post.Id,
-                Title = post.Title,
-                Content = post.Content,
-                CreatedAt = post.CreatedAt,
-                Category = new CategoryDto
-                {
-                    Name = post.Category.Name,
-                    Type = post.Category.Type
-                },
-                Author = new AuthorDto
-                {
-                    Id = post.Author.Id,
-                    Name = post.Author.Name,
-                    Email = post.Author.Email
-                }
-            }).ToList();
+            return posts.Select(post => _mapper.Map<PostDto>(post)).ToList();
         }
 
-        public async Task<PostDto> GetByIdAsync(Guid id)
+        public async Task<PostDto> GetPostByIdAsync(Guid postId)
         {
-            var post = await _postRepository.GetByIdAsync(id);
+            var post = await _postRepository.GetByIdAsync(postId);
 
             if (post == null)
-                throw new KeyNotFoundException($"Post com ID {id} não encontrado.");
+                throw new KeyNotFoundException($"Post com ID {postId} não encontrado.");
 
-            return new PostDto
-            {
-                Id = post.Id,
-                Title = post.Title,
-                Content = post.Content,
-                CreatedAt = post.CreatedAt,
-                Category = new CategoryDto
-                {
-                    Name = post.Category.Name,
-                    Type = post.Category.Type
-                },
-                Author = new AuthorDto
-                {
-                    Name = post.Author.Name,
-                    Email = post.Author.Email
-                }
-            };
+            return _mapper.Map<PostDto>(post);
         }
 
-        public async Task<PostDto> CreateAsync(CreatePostRequest request)
+        public async Task<PostDto> CreatePostAsync(CreatePostRequest request)
         {
             ArgumentNullException.ThrowIfNull(request);
 
-            Author author = await _authorRepository.GetAuthorByIdAsync(request.AuthorId);
-            if (author is null)
-                throw new KeyNotFoundException($"Autor {request.AuthorId} não encontrado.");
+            Author author = await _authorRepository.GetAuthorByIdAsync(request.AuthorId)
+                ?? throw new KeyNotFoundException($"Autor {request.AuthorId} não encontrado.");
 
             if (!Enum.IsDefined(typeof(CategoryType), request.Type))
                 throw new ArgumentException("Invalid category type.");
 
-            Category category = await _categoryRepository.GetByTypeAsync(request.Type);
-            if (category is null)
-                throw new InvalidOperationException("Category not found.");
+            Category category = await _categoryRepository.GetByTypeAsync(request.Type)
+                ?? throw new InvalidOperationException("Category not found.");
 
             Post post = new()
             {
                 Title = request.Title,
                 Content = request.Content,
-                AuthorId = request.AuthorId,
-                CreatedAt = DateTime.UtcNow,
-                CategoryId = category.Id
+                AuthorId = author.Id,
+                CategoryId = category.Id,
+                CreatedAt = DateTime.UtcNow
             };
 
-            var createdPost = await _postRepository.CreateAsync(post);
+            await _postRepository.CreateAsync(post);
 
-            return new PostDto
-            {
-                Id = createdPost.Id,
-                Title = createdPost.Title,
-                Content = createdPost.Content,
-                CreatedAt = createdPost.CreatedAt,
-                Category = new CategoryDto
-                {
-                    Name = createdPost.Category.Name,
-                    Type = createdPost.Category.Type
-                },
-                Author = new AuthorDto
-                {
-                    Id = author.Id,
-                    Name = author.Name,
-                    Email = author.Email
-                }
-            };
+            Post createdPost = await _postRepository.GetByIdAsync(post.Id)
+                ?? throw new InvalidOperationException("Failed to load created post.");
+
+            return _mapper.Map<PostDto>(createdPost);
         }
 
-        public async Task<PostDto> UpdateAsync(Guid id, UpdatePostRequest request)
+        public async Task<PostDto> UpdatePostAsync(Guid postId, UpdatePostRequest request)
         {
             ArgumentNullException.ThrowIfNull(request);
             ArgumentNullException.ThrowIfNull(request.Category);
 
-            Post post = await _postRepository.GetByIdAsync(id) ?? throw new KeyNotFoundException($"Post {id} not found.");
+            Post post = await _postRepository.GetByIdAsync(postId) ?? throw new KeyNotFoundException($"Post {postId} not found.");
 
             if (post.AuthorId != request.AuthorId)
                 throw new InvalidOperationException($"Only the same author can edit the post {post.Title}.");
@@ -142,31 +96,14 @@ namespace Blogger.Services
 
             Post updatedPost = await _postRepository.UpdateAsync(post);
 
-            return new PostDto
-            {
-                Id = updatedPost.Id,
-                Title = updatedPost.Title,
-                Content = updatedPost.Content,
-                CreatedAt = updatedPost.CreatedAt,
-                UpdatedAt = updatedPost.UpdatedAt,
-                Category = new CategoryDto
-                {
-                    Name = updatedPost.Category.Name,
-                    Type = updatedPost.Category.Type
-                },
-                Author = new AuthorDto
-                {
-                    Name = updatedPost.Author.Name,
-                    Email = updatedPost.Author.Email
-                }
-            };
+            return _mapper.Map<PostDto>(updatedPost);
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeletePostAsync(Guid postId)
         {
-            var post = await _postRepository.GetByIdAsync(id);
+            var post = await _postRepository.GetByIdAsync(postId);
             if (post is null)
-                throw new KeyNotFoundException($"Post {id} not found.");
+                throw new KeyNotFoundException($"Post {postId} not found.");
 
             return await _postRepository.DeleteAsync(post);
         }

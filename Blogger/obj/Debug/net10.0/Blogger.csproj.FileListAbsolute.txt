@@ -253,4 +253,6 @@ C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\Microsoft.
 C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\AutoMapper.dll
+C:\Users\gusta\Documents\C#\blogger-backend\Blogger\bin\Debug\net10.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\Users\gusta\Documents\C#\blogger-backend\Blogger\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

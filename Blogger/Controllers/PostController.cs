@@ -21,7 +21,7 @@ namespace Blogger.Controllers
         [HttpGet]
         public async Task<ActionResult<List<PostDto>>> Get()
         {
-            var result = await _postService.GetAllAsync();
+            var result = await _postService.GetAllPostsAsync();
             return Ok(result);
         }
 
@@ -30,7 +30,7 @@ namespace Blogger.Controllers
         {
             try
             {
-                var post = await _postService.GetByIdAsync(id);
+                var post = await _postService.GetPostByIdAsync(id);
                 return Ok(post);
             }
             catch (KeyNotFoundException ex)
@@ -45,7 +45,7 @@ namespace Blogger.Controllers
         {
             try
             {
-                var createdPost = await _postService.CreateAsync(request);
+                var createdPost = await _postService.CreatePostAsync(request);
                 return StatusCode(201, createdPost);
             }
             catch (KeyNotFoundException ex)
@@ -60,7 +60,7 @@ namespace Blogger.Controllers
         {
             try
             {
-                var updatedPost = await _postService.UpdateAsync(id, request);
+                var updatedPost = await _postService.UpdatePostAsync(id, request);
                 return Ok(updatedPost);
             }
             catch (KeyNotFoundException ex)
@@ -75,7 +75,7 @@ namespace Blogger.Controllers
         {
             try
             {
-                await _postService.DeleteAsync(id);
+                await _postService.DeletePostAsync(id);
                 return NoContent();
             }
             catch (KeyNotFoundException ex)
